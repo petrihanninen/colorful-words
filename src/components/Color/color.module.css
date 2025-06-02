@@ -1,0 +1,31 @@
+.card {
+  width: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 0 1rem;
+  border-radius: 0.75rem;
+  color: var(--color-1);
+  background-color: #fff;
+  cursor: copy;
+}
+
+.card:hover {
+  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.7);
+  transform: scale(1.2);
+  transition: box-shadow, transform, 150ms cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.colorBox {
+  width: 4rem;
+  height: 4rem;
+}
+

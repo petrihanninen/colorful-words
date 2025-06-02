@@ -1,0 +1,20 @@
+.search {
+  padding: 1rem;
+  text-align: center;
+  margin: 1rem 0 0;
+}
+
+.info {
+  color: #ccc;
+  font-size: 0.8rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 60rem;
+  margin-top: 2rem;
+}
