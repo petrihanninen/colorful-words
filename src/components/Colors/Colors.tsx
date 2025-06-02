@@ -12,8 +12,8 @@ export const Colors: React.FC<{ initialColors: ColorType[] }> = ({ initialColors
 
   const [colors, setColors] = useState(initialColors)
 
-  const handleInput = (v: string) => {
-    setColors(filterColors(initialColors, { term: v.toLowerCase() }))
+  const handleInput = (term: string) => {
+    setColors(filterColors(initialColors, { term }))
   }
 
   return (
