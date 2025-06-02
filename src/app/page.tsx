@@ -1,10 +1,10 @@
 import styles from "./index.module.css";
 
-import { getColorWords } from "./colors";
+import { getColorWords } from "./read-colors";
 import { Colors } from "@/components/Colors/Colors";
 
 export default function Home() {
-  const colorWords = getColorWords();
+  const initialColors = getColorWords();
 
   return (
     <main className={styles.main}>
@@ -16,7 +16,7 @@ export default function Home() {
         <p>Choosing a nice color can be hard just by looking at the color. An objectively easier way to pick a nice color for your next design is to pick one that spells out a funny word. That I can help you with.</p>
       </div>
 
-      <Colors colorWords={colorWords} />
+      <Colors initialColors={initialColors} />
     </main>
   );
 }

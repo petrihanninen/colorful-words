@@ -1,38 +1,29 @@
 'use client'
+
 import { useState } from 'react';
 import { Color } from "@/components/Color/Color";
+import type { Color as ColorType } from '@/app/colors';
+
+import { filterColors } from '@/app/colors';
 
 import styles from './colors.module.css';
 
-type Params = {
-  term?: string;
-}
+export const Colors: React.FC<{ initialColors: ColorType[] }> = ({ initialColors }) => {
 
-export const filterColors = (content: string[], { term }: Params) => {
-  let words = content
-  if (term) {
-    words = words.filter(word => word.includes(term))
-  }
-
-  return words
-}
-
-export const Colors: React.FC<{ colorWords: string[] }> = ({ colorWords }) => {
-
-  const [colors, setColors] = useState(colorWords)
+  const [colors, setColors] = useState(initialColors)
 
   const handleInput = (v: string) => {
-    setColors(filterColors(colorWords, { term: v.toLowerCase() }))
+    setColors(filterColors(initialColors, { term: v.toLowerCase() }))
   }
 
   return (
     <>
       <input placeholder="Search for a color" className={styles.search} type="text" onChange={(e) => handleInput(e.currentTarget.value)} />
 
-      <p className={styles.info}>Showing {colors.length} of {colorWords.length} colors</p>
+      <p className={styles.info}>Showing {colors.length} of {initialColors.length} colors</p>
 
       <div className={styles.cards}>
-        {colors.map(color => <Color key={color} colorWord={color} />)}
+        {colors.map(color => <Color key={color.hex} color={color} />)}
       </div>
     </>
   )

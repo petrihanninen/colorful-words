@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 const conversionTable = {
   a: 'a',
   b: 'b',
@@ -18,7 +15,22 @@ const conversionTable = {
 
 const isConvertableChar = (c: unknown): c is keyof typeof conversionTable => typeof c === 'string' && c in conversionTable;
 
-const isColorWord = (input: string) => {
+export const isValidColor = (c: Record<string, unknown>): c is Color => typeof c?.hex === 'string' && c?.word === 'string' && getWordHex(c.word) !== null && typeof c?.rgb === 'string' && typeof c?.hsl === 'string';
+
+export const isValidColorWord = (w: string) => getWordHex(w) !== null;
+
+type Params = {
+  term?: string;
+}
+
+export type Color = {
+  hex: string;
+  word: string;
+  rgb: string;
+  hsl: string;
+};
+
+export const isValidHex = (input: string) => {
   if (input.length !== 6 && input.length !== 3) {
     return false;
   }
@@ -33,8 +45,55 @@ const isColorWord = (input: string) => {
   return word;
 }
 
-export const getColorWords = () => {
-  const filePath = path.join(process.cwd(), 'src/words_alpha.txt')
-  const content = fs.readFileSync(filePath, 'utf8').split('\r\n')
-  return content.filter(isColorWord);
+export const filterColors = (content: Color[], { term }: Params) => {
+  let colors = content
+  if (term) {
+    colors = colors.filter(color => color.word.includes(term))
+  }
+
+  return colors
 }
+export const getHexHSL = (input: string) => {
+  let hex = input;
+
+  if (input.length === 3) {
+    const chars = input.split('')
+    hex = `${chars[0]}${chars[0]}${chars[1]}${chars[1]}${chars[2]}${chars[2]}`
+  }
+
+  return hex;
+}
+
+export const getHexRGB = (input: string) => {
+  let hex = input;
+
+  if (input.length === 3) {
+    const chars = input.split('')
+    hex = `${chars[0]}${chars[0]}${chars[1]}${chars[1]}${chars[2]}${chars[2]}`
+  }
+
+  return hex;
+}
+
+export const getWordHex = (input: string) => {
+  if (input.length !== 6 && input.length !== 3) {
+    return null
+  }
+
+  const word = input.toLowerCase();
+
+  let color = '#';
+  for (let i = 0; i < word.length; i++) {
+    const char = word[i] as keyof typeof conversionTable
+
+    if (!char) return null
+    if (!isConvertableChar(char)) return null
+
+    const letter = conversionTable[char]
+
+    color += letter;
+  }
+
+  return color;
+}
+
