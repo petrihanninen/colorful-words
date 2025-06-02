@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getHexRGB, getHexHSL, getWordHex, isValidColorWord } from './colors';
+import { getHexRGB, getHexHSL, getWordHex, isValidColorWord, isValidColor } from './colors';
 
 export const getColorWords = () => {
   const filePath = path.join(process.cwd(), 'src/words_alpha.txt')
@@ -15,6 +15,6 @@ export const getColorWords = () => {
       hsl: hex && getHexHSL(hex),
     }
   })
-  return colors
+  return colors.filter(isValidColor)
 }
 

@@ -15,7 +15,7 @@ const conversionTable = {
 
 const isConvertableChar = (c: unknown): c is keyof typeof conversionTable => typeof c === 'string' && c in conversionTable;
 
-export const isValidColor = (c: Record<string, unknown>): c is Color => typeof c?.hex === 'string' && c?.word === 'string' && getWordHex(c.word) !== null && typeof c?.rgb === 'string' && typeof c?.hsl === 'string';
+export const isValidColor = (c: Record<string, unknown>): c is Color => typeof c?.hex === 'string' && typeof c?.rgb === 'string' && typeof c?.hsl === 'string' && typeof c?.word === 'string';
 
 export const isValidColorWord = (w: string) => (w.length === 6 || w.length === 3) && getWordHex(w) !== null;
 
@@ -37,8 +37,8 @@ export const isValidHex = (input: string) => {
 
   const word = input.toLowerCase();
 
-  for (let i = 0; i < word.length; i++) {
-    if (!isConvertableChar(word[i])) {
+  for (const char of word) {
+    if (!isConvertableChar(char)) {
       return false
     }
   }
@@ -80,9 +80,7 @@ export const getWordHex = (input: string) => {
   const word = input.toLowerCase();
 
   let color = '#';
-  for (let i = 0; i < word.length; i++) {
-    const char = word[i] as keyof typeof conversionTable
-
+  for (const char of word) {
     if (!char) return null
     if (!isConvertableChar(char)) return null
 
